@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Über Uns</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+   
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li> <a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li> <a href="{{ url_for('index') }}">Startseite</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <h1>Über Uns</h1>
+    <h2>Wir sind eine Gruppe von Studenten von IU Internationale Hochschule. Die Autoren dieser Webseite sind:</h2>
+    
+    
+        <div class="Wir">
+           
+            <ul>
+                <li>Onur Demir</li>
+                <li>Paul Grund</li>
+                <li>Rümeysa Hayirli</li>
+                <li>Onur Cabri</li>
+                <li>Marcus Röttger</li>
+            </ul>
+            <h2>Sie können uns unter folgende E-Mail adresse und Telefonnumer erreichen</h2>
+            <ul><li>E-Mail: IU.Students.Group@iu.de</li>
+            <li>Telefonnummer: 0176 66633233</li></ul>
+        </div>
+    
+        <footer>
+            <p>&copy; 2025 Online-Quizsystem. Alle Rechte vorbehalten.</p>
+        </footer>
+    </body>

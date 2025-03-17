@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz spielen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li> <a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li> <a href="{{ url_for('index') }}">Startseite</a></li>
+
+            </ul>
+        </nav>
+    </header>
+ 
+    <main>
+        <section id="quiz">
+            <h2>Quiz spielen</h2>
+            <p>Wähle einen Modus:</p>
+            <div class="quiz-options">
+                <button>Gegeneinander</button>
+                <button>Kooperativ</button>
+            </div>
+            <p><strong>Aktuelle Frage:</strong> Was ist die Hauptstadt von Frankreich?</p>
+            <div class="answers">
+                <button>A) Berlin</button>
+                <button>B) Paris</button>
+                <button>C) Rom</button>
+                <button>D) Madrid</button>
+            </div>
+        </section>
+    </main>
+ 
+    <footer>
+        <p>&copy; 2025 Online-Quizsystem. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>
