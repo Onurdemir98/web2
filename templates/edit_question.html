@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frage bearbeiten</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                   
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="edit-question">
+            <h2>Frage bearbeiten</h2>
+            <form method="POST">
+                <label for="course">Kurs auswählen:</label>
+<select name="course_id" title="Kurs auswählen">
+    {% for course in courses %}
+        <option value="{{ course.id }}" {% if course.id == question.course_id %}selected{% endif %}>
+            {{ course.name }}
+        </option>
+    {% endfor %}
+</select>
+
+                <label for="question">Frage:</label>
+                <input type="text" id="question" name="question" value="{{ question.question }}" required>
+
+                <label for="answer1">Antwort 1:</label>
+                <input type="text" name="answer1" value="{{ question.answeroption1 }}" title="Antwort 1" placeholder="Antwort 1 eingeben" required>
+
+                <label for="answer2">Antwort 2:</label>
+                <input type="text" name="answer2" value="{{ question.answeroption2 }}" title="Antwort 2" placeholder="Antwort 2 eingeben" required>
+
+                <label for="answer3">Antwort 3:</label>
+                <input type="text" name="answer3" value="{{ question.answeroption3 }}" title="Antwort 3" placeholder="Antwort 3 eingeben" required>
+
+                <label for="answer4">Antwort 4:</label>
+                <input type="text" name="answer4" value="{{ question.answeroption4 }}" title="Antwort 4" placeholder="Antwort 4 eingeben" required>
+                
+                <label for="correct-answer">Richtige Antwort:</label>
+                <select id="correct-answer" name="correct-answer">
+                    <option value="1">Antwort 1</option>
+                    <option value="2">Antwort 2</option>
+                    <option value="3">Antwort 3</option>
+                    <option value="4">Antwort 4</option>
+                </select>
+                
+                <label for="erklaerung">Erklärung:</label>
+                <textarea name="erklaerung" id="erklaerung" rows="4">{{ question.erklaerung }}</textarea>
+
+                <button type="submit">Frage aktualisieren</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Online-Quizsystem. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>

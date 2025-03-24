@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Details</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Quiz Details</h1>
+
+{% if single_quiz %}
+    <h3>Spieler: {{ single_quiz[0].player_email }}</h3>
+    <table border="1">
+        <tr>
+            <th>Frage</th>
+            <th>Optionen</th>
+            <th>richtige Antwort</th>
+            <th>Erklärung</th>  <!-- ✅ Yeni Açıklama Sütunu -->
+        </tr>
+        {% for question in single_quiz %}
+        <tr>
+            <td>{{ question.question }}</td>
+            <td>
+                1) {{ question.answeroption1 }} <br>
+                2) {{ question.answeroption2 }} <br>
+                3) {{ question.answeroption3 }} <br>
+                4) {{ question.answeroption4 }}
+            </td>
+            <td>{{ question.correct_answer }}</td>
+            <td>{{ question.erklaerung or 'Açıklama yok' }}</td>  <!-- ✅ Açıklamayı ekledik -->
+        </tr>
+        {% endfor %}
+    </table>
+
+{% elif multiplayer_quiz %}
+    <h3>Spieler: {{ multiplayer_quiz.player1 }} & {{ multiplayer_quiz.player2 }}</h3>
+    <table border="1">
+        <tr>
+            <th>Frage</th>
+            <th>Optionen</th>
+            <th>Richtige Antwort</th>
+            <th>Erklärung</th>  <!-- ✅ Yeni Açıklama Sütunu -->
+        </tr>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.question }}</td>
+            <td>
+                1) {{ question.answeroption1 }} <br>
+                2) {{ question.answeroption2 }} <br>
+                3) {{ question.answeroption3 }} <br>
+                4) {{ question.answeroption4 }}
+            </td>
+            <td>{{ question.correct_answer }}</td>
+            <td>{{ question.erklaerung or 'Açıklama yok' }}</td>  <!-- ✅ Açıklamayı ekledik -->
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Bu quizin detayları bulunamadı.</p>
+{% endif %}
+
+<form action="{{ url_for('quiz') }}" method="GET">
+    <button type="submit">Zurück -> Quiz-Seite</button>
+</form>
+</body>
+</html>

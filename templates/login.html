@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleLogin.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Login</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                   
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+
+
+   
+        <form action="{{ url_for('login') }}" method="POST" class="form">
+            <h2>Login</h2>
+            <span class="tooltip">Bitte mit IU-Profil anmelden</span>
+            <div class="input-group">
+                <input type="text" id="LoginUser" name="email" required>
+                <label for="LoginUser">Email</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="LoginPassword" name="password" required>
+                <label for="LoginPassword">password</label>
+            </div>
+            <button type="submit">Login</button>
+
+            <!-- Flash Messages direkt unter dem Button -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div>
+            {% for category, message in messages %}
+                <p class="flash-message {{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+</form>
+        </form>
+        
+    </div>
+
+</body>
+</html>

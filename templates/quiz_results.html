@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Sonuçları</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <h1>Quiz Ergebnisse</h1>
+    <table border="1">
+        <tr>
+            <th>Frage</th>
+            <th>Optionen</th>
+            <th>Ausgewählte Option</th>
+            <th>Richtige Antwort</th>
+            <th>Erklärung</th>
+        </tr>
+        {% for question in session["quiz_results"] %}
+        <tr>
+            <td>{{ question.question }}</td>
+            <td>
+                1) {{ question.answeroption1 }} <br>
+                2) {{ question.answeroption2 }} <br>
+                3) {{ question.answeroption3 }} <br>
+                4) {{ question.answeroption4 }}
+            </td>
+            <td>{{ question.selected_answer }}</td>
+            <td>{{ question.correct_answer }}</td>
+            <td>{{ question.erklaerung }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Total Score: {{ session["total_score"] }} Punkte</h3>
+    <form action="{{ url_for('quiz') }}" method="GET">
+        <button type="submit">Zurück -> Quiz-Seite</button>
+    </form>
+</body>
+</html>

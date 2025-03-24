@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragen einpflegen</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                   
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form method="POST">
+            <label for="course_id">Kurs Auswählen</label>
+            <select name="course_id" id="course_id" required title="Kurs Auswählen">
+                <option value="" disabled selected>Kurs Auswählen</option>
+                {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+            
+
+            <label for="question">Frage:</label>
+            <input type="text" id="question" name="question" placeholder="Gib hier deine Frage ein" required>
+            
+            <label for="answers">Antwortmöglichkeiten:</label>
+            <input type="text" name="answer1" placeholder="Antwort 1" required>
+            <input type="text" name="answer2" placeholder="Antwort 2" required>
+            <input type="text" name="answer3" placeholder="Antwort 3" required>
+            <input type="text" name="answer4" placeholder="Antwort 4" required>
+        
+            <label for="correct-answer">Richtige Antwort:</label>
+            <select id="correct-answer" name="correct-answer">
+                <option value="1">Antwort 1</option>
+                <option value="2">Antwort 2</option>
+                <option value="3">Antwort 3</option>
+                <option value="4">Antwort 4</option>
+            </select>
+        
+            <label for="erklaerung">Erklärung:</label>
+            <textarea id="erklaerung" name="erklaerung" placeholder="Warum ist diese Antwort richtig?" maxlength="300"></textarea>
+        
+            <button type="submit">Frage hinzufügen</button>
+        </form>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <section id="fragen-liste">
+            <h2>Gespeicherte Fragen</h2>
+            <ul id="fragen-container">
+                {% for q in questions %}
+                    <li>
+                        <strong>{{ q.question }}</strong> <br>
+                        <strong>Kurs:</strong> {{ q.course_name }} <br>
+                        A: {{ q.answeroption1 }} | B: {{ q.answeroption2 }} | C: {{ q.answeroption3 }} | D: {{ q.answeroption4 }} <br>
+                        <em>Erklärung:</em> {{ q.erklaerung }} <br>
+                        <small>Hinzugefügt von: {{ q.student_name }} (ID: {{ q.student_id }})</small> <br>
+            
+                        {% if session.get("email") %}
+                        <form action="{{ url_for('edit_question', id=q.id) }}" method="GET" style="display:inline;">
+                            <button type="submit" class="bearbeiten-btn">Bearbeiten</button>
+                        </form>
+                            <form action="{{ url_for('delete_question', id=q.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Sind Sie sicher?');">Löschen</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+ 
+    <footer>
+        <p>&copy; 2025 Online-Quizsystem. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>
+

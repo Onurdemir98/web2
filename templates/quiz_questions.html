@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+
+
+</head>
+<header>
+    <nav>
+        <h1>Online-Quizsystem</h1>
+        <ul>
+            <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+            <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+            
+            <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+            <li><a href="{{ url_for('index') }}">Startseite</a></li>
+            <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+        
+            {% if session.get("email") %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+            {% endif %}
+        
+            
+        </ul>
+    </nav>
+</header>
+<body>
+    <h2>Beantworten Sie die folgenden Fragen</h2>
+    
+
+    
+    <form action="{{ url_for('submit_quiz') }}" method="POST">
+        {% for question in questions %}
+            <h3>{{ question.question }}</h3>
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="1"> {{ question.answeroption1 }}
+            </label><br>
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="2"> {{ question.answeroption2 }}
+            </label><br>
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="3"> {{ question.answeroption3 }}
+            </label><br>
+            <label>
+                <input type="radio" name="question_{{ question.id }}" value="4"> {{ question.answeroption4 }}
+            </label><br>
+            <hr>
+        {% endfor %}
+        <button type="submit">Quiz Tamamlandı</button>
+    </form>
+    
+    
+    <script>
+    document.getElementById("show-score").addEventListener("click", function() {
+        let formData = new FormData(document.getElementById("quiz-form"));
+    
+        fetch("{{ url_for('calculate_score') }}", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("total-score").innerText = "Total Score" + data.total_score + " Punkte";
+        });
+    });
+    </script>
+</body>
+</html>
+
+
+

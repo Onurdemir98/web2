@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz spielen</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Online-Quizsystem</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+ 
+    <main>
+        <section id="quiz">
+            <h2>Quiz spielen</h2>
+            <p>Wähle einen Modus:</p>
+            <div class="quiz-options">
+                <a href="{{ url_for('select_course') }}"><button>Allein</button></a>
+                <a href="{{ url_for('multiplayer') }}"><button>Kooperativ</button></a>
+                
+            </div>
+    
+
+
+
+        
+            <!-- 📌 Multiplayer quizler -->
+            <h3>Kooperative Spiele</h3>
+            <table border="1">
+                <tr>
+                    <th>Spiel ID</th>
+                    <th>Spieler 1</th>
+                    <th>Spieler 2</th>
+                    <th>Punkte 1</th>
+                    <th>Punkte 2</th>
+                    <th>Details</th>
+                    <th>Löschen</th>
+                </tr>
+                {% for game in multiplayer_games %}
+                <tr>
+                    <td>{{ game.game_id }}</td>
+                    <td>{{ game.player1 }}</td>
+                    <td>{{ game.player2 }}</td>
+                    <td>{{ game.score1 }}</td>
+                    <td>{{ game.score2 }}</td>
+                    
+                    <td> <form action="{{ url_for('quiz_details', quiz_id=game.game_id) }}" method="GET">
+                        <button type="submit">Details Sehen</button>
+                    </form></td>
+
+                       
+                    
+                    <td>
+                        <form action="{{ url_for('delete_multiplayer_quiz', game_id=game.game_id) }}" method="POST">
+                            <button type="submit">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </section>            
+               
+            
+            
+            <div class="answers">
+             
+            </div>
+        </section>
+    </main>
+ 
+    <footer>
+        <p>&copy; 2025 Online-Quizsystem. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>

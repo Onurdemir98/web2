@@ -1,0 +1,60 @@
+
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Frage bearbeiten</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <h1>Online-Quizsystem</h1>
+                <ul>
+                    <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                    <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                    <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                    <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                    <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                    {% if session.get("email") %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                       
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+    {% if requests %}
+    <table border="1">
+        <tr>
+            <th>Zusender</th>
+            <th>Spiel ID</th>
+            <th>Aktion</th>
+        </tr>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.sender_email }}</td>
+            <td>{{ req.game_id }}</td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="game_id" value="{{ req.game_id }}">
+                    <button type="submit" name="action" value="Kabul Et">Annehmen</button>
+                    <button type="submit" name="action" value="Reddet">Ablehnen</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Aktuell keine Anfrage</p>
+    {% endif %}
+
+    <form action="{{ url_for('quiz') }}" method="GET">
+        <button type="submit">Zurück -> Quiz-Seite</button>
+    </form>
+</body>
+</html>
+

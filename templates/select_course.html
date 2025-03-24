@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurs wählen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<header>
+    <nav>
+        <h1>Online-Quizsystem</h1>
+        <ul>
+            <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+            <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+            
+            <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+            <li><a href="{{ url_for('index') }}">Startseite</a></li>
+            <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+        
+            {% if session.get("email") %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+            {% endif %}
+        
+            
+        </ul>
+    </nav>
+</header>
+<body>
+    <h2>Bitte wählen Sie einen Kurs</h2>
+    <h2>Kurs Auswählen und starten</h2>
+    <form action="{{ url_for('start_solo_quiz') }}" method="POST">
+        <label for="course_id">Kurs Auswählen:</label>
+        <select name="course_id" id="course_id" required>
+            {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Quiz Starten</button>
+    </form>
+</body>
+</html>

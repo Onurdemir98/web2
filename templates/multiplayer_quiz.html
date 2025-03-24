@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Login</h1>
+            <ul>
+                <li><a href="{{ url_for('quiz') }}">Quiz spielen</a></li>
+                <li><a href="{{ url_for('fragenkatalog') }}">Fragen einpflegen</a></li>
+                <li><a href="{{ url_for('aboutus') }}">Über uns</a></li>
+                <li><a href="{{ url_for('index') }}">Startseite</a></li>
+                <li><a href="{{ url_for('anfragen') }}">Anfragen</a></li>
+                {% if session.get("email") %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Registrierung</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+
+<form method="POST">
+    {% for question in questions %}
+        <div>
+            <p>{{ question.question }}</p>
+            <label><input type="radio" name="question_{{ question.id }}" value="1"> {{ question.answeroption1 }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="2"> {{ question.answeroption2 }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="3"> {{ question.answeroption3 }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="4"> {{ question.answeroption4 }}</label><br>
+        </div>
+    {% endfor %}
+    <button type="submit">Antworten Senden</button>
+</form>
