@@ -205,7 +205,7 @@ def quiz_details(quiz_id):
             flash("Error Fragen Upload", "danger")
             return redirect(url_for("quiz"))
 
-        # 📌 Soruları açıklama (`erklaerung`) ile birlikte çek
+        # 📌 Fragen mit (`erklaerung`) ziehen
         questions = Questions.query.with_entities(
             Questions.id, 
             Questions.question, 
@@ -361,7 +361,7 @@ def multiplayer():
         friend = Students.query.filter_by(email=friend_email).first()
 
         if not friend:
-            flash("Freund nicht gefunden!", "danger")
+            
             return redirect(url_for("multiplayer"))
 
         # Oyun ID oluştur

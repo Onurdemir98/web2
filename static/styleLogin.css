@@ -212,3 +212,82 @@ h2 {
     background-color: #f8d7da;
     color: #721c24;
 }
+/* Responsives Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header img {
+        margin-bottom: 10px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    main nav ul {
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto; /* Erlaubt horizontales Scrollen bei kleinen Geräten */
+        white-space: nowrap;
+    }
+
+    footer nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+
+    header {
+        padding: 15px 0;
+        text-align: center;
+    }
+
+    header img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    footer nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

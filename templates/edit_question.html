@@ -41,19 +41,19 @@
 </select>
 
                 <label for="question">Frage:</label>
-                <input type="text" id="question" name="question" value="{{ question.question }}" required>
+                <input type="text" id="question" name="question" value="{{ question.question }}" required title="Frage eingeben" placeholder="Frage eingeben">
 
                 <label for="answer1">Antwort 1:</label>
-                <input type="text" name="answer1" value="{{ question.answeroption1 }}" title="Antwort 1" placeholder="Antwort 1 eingeben" required>
+                <input type="text" name="answer1" value="{{ question.answeroption1 }}" title="Antwort 1" placeholder="Antwort 1 eingeben" required title="Antwort 1">
 
                 <label for="answer2">Antwort 2:</label>
-                <input type="text" name="answer2" value="{{ question.answeroption2 }}" title="Antwort 2" placeholder="Antwort 2 eingeben" required>
+                <input type="text" name="answer2" value="{{ question.answeroption2 }}" title="Antwort 2" placeholder="Antwort 2 eingeben" required title="Antwort 2">
 
                 <label for="answer3">Antwort 3:</label>
-                <input type="text" name="answer3" value="{{ question.answeroption3 }}" title="Antwort 3" placeholder="Antwort 3 eingeben" required>
+                <input type="text" name="answer3" value="{{ question.answeroption3 }}" title="Antwort 3" placeholder="Antwort 3 eingeben" required title="Antwort 3">
 
                 <label for="answer4">Antwort 4:</label>
-                <input type="text" name="answer4" value="{{ question.answeroption4 }}" title="Antwort 4" placeholder="Antwort 4 eingeben" required>
+                <input type="text" name="answer4" value="{{ question.answeroption4 }}" title="Antwort 4" placeholder="Antwort 4 eingeben" required  title="Antwort 4">
                 
                 <label for="correct-answer">Richtige Antwort:</label>
                 <select id="correct-answer" name="correct-answer">
